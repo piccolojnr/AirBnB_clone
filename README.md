@@ -1,6 +1,6 @@
 # AirBnB Clone - The ALX_SE
 
-![AirBnB Logo](https://www.google.com/imgres?imgurl=https%3A%2F%2Fmiro.medium.com%2Fv2%2Fresize%3Afit%3A1358%2F0*NChTo-XqLOxLabIW&tbnid=WgtMfmJcGTtsEM&vet=12ahUKEwi6tp_FnfiCAxUfmicCHRVPDnEQMygCegQIARBy..i&imgrefurl=https%3A%2F%2Fmedium.com%2Fkeycafe%2Fthe-history-of-airbnb-397c3d539f27&docid=H46ZffjOwlW9aM&w=1339&h=609&q=airbnb&client=opera&ved=2ahUKEwi6tp_FnfiCAxUfmicCHRVPDnEQMygCegQIARBy)
+![AirBnB Logo](https://user-images.githubusercontent.com/88311316/151070609-19608294-829e-408b-b2b3-5d1f2873f1e3.png)
 
 
 ## Description
