@@ -35,6 +35,7 @@ class HBNBCommand(cmd.Cmd):
         args = {
             "all": self.do_all,
             "show": self.do_show,
+            "count": self.do_count,
             "destroy": self.do_destroy,
             "update": self.do_update,
         }
@@ -46,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
                 command = [arg1[1][: match.span()[0]], match.group()[1:-1]]
                 if command[0] in args:
                     call = args[command[0]]
-                    call(command[1])
+                    call(arg1[0])
                     return
 
         print("*** Unknown syntax: {}".format(arg))
@@ -164,6 +165,27 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
         print(instances)
+
+    def do_count(self, arg):
+        """
+         Retrieves the number of instances of a specific class.
+        Usage: count <class name>
+        - Usage: count BaseModel
+        - Usage: <class name>.count(): Equivalent to 'count <class name>'.
+        """
+        args = arg.split()
+        if not args:
+            print("** class name missing **")
+            return
+        class_name = args[0]
+        if class_name not in self.__classes:
+            print("** class doesn't exist **")
+            return
+        count = 0
+        for key, value in storage.all().items():
+            if value.__class__.__name__ == class_name:
+                count += 1
+        print(count)
 
     def do_update(self, arg):
         """
