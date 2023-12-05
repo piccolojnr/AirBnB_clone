@@ -1,6 +1,6 @@
 # AirBnB Clone - The ALX_SE
 
-![AirBnB Logo](https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20231205%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231205T095131Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=68ae9d23cd1c2e0ea440202e4499ebb4e96deb64e151c5e0b31e5a2bdafa91cb)
+![AirBnB Logo](https://www.google.com/imgres?imgurl=https%3A%2F%2Fmiro.medium.com%2Fv2%2Fresize%3Afit%3A1358%2F0*NChTo-XqLOxLabIW&tbnid=WgtMfmJcGTtsEM&vet=12ahUKEwi6tp_FnfiCAxUfmicCHRVPDnEQMygCegQIARBy..i&imgrefurl=https%3A%2F%2Fmedium.com%2Fkeycafe%2Fthe-history-of-airbnb-397c3d539f27&docid=H46ZffjOwlW9aM&w=1339&h=609&q=airbnb&client=opera&ved=2ahUKEwi6tp_FnfiCAxUfmicCHRVPDnEQMygCegQIARBy)
 
 
 ## Description
@@ -54,9 +54,9 @@ This repository contains the following files:
 
 Clone the repository and run the console.py:
 
-$ git clone https://github.com/------/AirBnB_clone.git
-$ cd AirBnB_clone
-$ ./console.py
+`$ git clone https://github.com/------/AirBnB_clone.git`
+`$ cd AirBnB_clone`
+`$ ./console.py`
 
 ## How To Use
 
