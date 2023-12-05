@@ -54,7 +54,6 @@ This repository contains the following files:
 
 Clone the repository and run the console.py:
 
-```bash
 $ git clone https://github.com/------/AirBnB_clone.git
 $ cd AirBnB_clone
 $ ./console.py
@@ -71,34 +70,7 @@ The console provides various commands for managing objects. Here are some of the
 - `help`: Prints information about a specific command.
 - `quit/EOF`: Exits the program.
 
-### Table of Contents
-
-```bash
-0x01 Introduction
-0x02 Environment
-0x03 Installation
-0x04 Testing
-0x05 Usage
-0x06 Authors
-
-0x01 Introduction
-Team project to build a clone of AirBnB.
-
-The console is a command interpreter to manage objects' abstraction between objects and how they are stored.
-
-For more details, visit the [Wiki page](https://en.wikipedia.org/wiki/Airbnb).
-
-0x02 Environment
-...
-
-0x03 How to start...
-
-0x04 Testing
-...
-
-0x05 How to use
-...
-
 ## Authors
+
 - rahim daud
 - Augustine Rita
