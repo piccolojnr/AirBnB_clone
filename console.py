@@ -3,6 +3,7 @@
  entry point of the command interpreter
 """
 import cmd
+import re
 from models.base_model import BaseModel
 from models.user import User
 from models import storage
@@ -28,6 +29,28 @@ class HBNBCommand(cmd.Cmd):
         "Review": Review,
         "Amenity": Amenity,
     }
+
+    def default(self, arg):
+        """Default behavior for cmd module when input is invalid"""
+        args = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "update": self.do_update,
+        }
+        match = re.search(r"\.", arg)
+        if match is not None:
+            arg1 = [arg[: match.span()[0]], arg[match.span()[1] :]]
+            match = re.search(r"\((.*?)\)", arg1[1])
+            if match is not None:
+                command = [arg1[1][: match.span()[0]], match.group()[1:-1]]
+                if command[0] in args:
+                    call = args[command[0]]
+                    call(command[1])
+                    return
+
+        print("*** Unknown syntax: {}".format(arg))
+        return False
 
     def do_EOF(self, arg):
         """EOF signal to exit the program"""
@@ -65,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
             return
-        args = arg.split(" ")
+        args = parse_arg(arg)
         if args[0] not in self.__classes:
             print("** class doesn't exist **")
             return
@@ -87,7 +110,7 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
             return
-        args = arg.split(" ")
+        args = parse_arg(arg)
         if args[0] not in self.__classes:
             print("** class doesn't exist **")
             return
@@ -103,23 +126,44 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """
-        Prints all string representation of all instances based or not
-        on the class name.
+        Retrieve all instances or instances of a specific class.
+        Usage:
+          - all: Retrieve all instances across all classes.
+          - all <class>: Retrieve all instances of the specified class.
+          - <class>.all(): Equivalent to 'all <class>'.
         """
-        if not arg:
-            print([str(value) for value in storage.all().values()])
-            return
-        if arg not in self.__classes:
-            print("** class doesn't exist **")
-            return
-
-        print(
-            [
-                str(value)
-                for value in storage.all().values()
-                if value.__class__.__name__ == arg
-            ]
-        )
+        args = arg.split()
+        instances = []
+        if not args:
+            # If no arguments provided, retrieve all instances across all classes
+            instances = [value.__str__() for value in storage.all().values()]
+        elif len(args) == 1:
+            # If one argument provided, check if it's a class name
+            class_name = args[0]
+            if class_name in self.__classes.keys():
+                # If it's a valid class, retrieve instances of that class
+                instances = [
+                    value.__str__()
+                    for value in storage.all().values()
+                    if value.__class__.__name__ == class_name
+                ]
+            else:
+                print("** class doesn't exist **")
+                return
+        elif len(args) == 3 and args[1] == "all()" and args[2] == ":":
+            # If three arguments provided in the format <class>.all():
+            class_name = args[0]
+            if class_name in self.__classes.keys():
+                # If it's a valid class, retrieve instances of that class
+                instances = [
+                    value.__str__()
+                    for value in storage.all().values()
+                    if value.__class__.__name__ == class_name
+                ]
+            else:
+                print("** class doesn't exist **")
+                return
+        print(instances)
 
     def do_update(self, arg):
         """
@@ -177,29 +221,16 @@ class HBNBCommand(cmd.Cmd):
 
 
 def parse_arg(arg):
-    """
-    Parse arg
-    """
-    args = arg.split(" ")
-    class_name = args[0]
-    id = args[1] if len(args) > 1 else ""
-    attr_name = args[2] if len(args) > 2 else ""
-    attr_val = ""
+    # Define a regular expression pattern to match quoted and non-quoted substrings
+    pattern = r'("[^"]*"|[^"\s]+)'
 
-    if len(args) > 3:
-        for i in range(3, len(args)):
-            if args[i][0] == '"' and args[i][-1] == '"':
-                attr_val = args[i][1:-1]  # Remove double quotes
-                break
-            elif args[i][0] == '"':
-                attr_val += args[i][1:]
-            elif args[i][-1] == '"':
-                attr_val += args[i][:-1]
-                break
-            else:
-                attr_val += args[i]
+    # Use re.findall to extract substrings that match the pattern
+    args = re.findall(pattern, arg)
 
-    return (class_name, id, attr_name, attr_val)
+    # Remove quotes from quoted substrings
+    args = [substring.strip('"') for substring in args]
+
+    return args
 
 
 if __name__ == "__main__":
