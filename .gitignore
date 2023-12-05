@@ -1,0 +1,8 @@
+# Files not to be pushed
+
+# Ignore files ending with a hash (#)
+*#
+
+# Ignore files ending with a tilde (~)
+*~
+
