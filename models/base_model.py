@@ -1,8 +1,10 @@
+#!/usr/bin/python3
 """
     This file contains the BaseModel class, which serves as the base class for all models in the project.
 """
 from datetime import datetime
 from uuid import uuid4
+import models
 
 
 class BaseModel:
@@ -15,17 +17,19 @@ class BaseModel:
     updated_at = datetime.now()
 
     def __init__(self, *args, **kwargs):
+        date_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
-                    value = datetime.fromisoformat(value)
+                    value = datetime.strptime(value, date_format)
                 if key != "__class__":
                     setattr(self, key, value)
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            
+            models.storage.new(self)
+
     def __str__(self) -> str:
         """
         Returns a string representation of the object.
@@ -37,6 +41,7 @@ class BaseModel:
         Updates the 'updated_at' attribute with the current datetime.
         """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """
