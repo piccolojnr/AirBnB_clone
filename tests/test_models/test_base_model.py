@@ -100,7 +100,7 @@ class test_basemodel_to_dict_values(unittest.TestCase):
         self.assertEqual(dict, type(bm.to_dict()))
         self.assertIn("created_at", bm.to_dict())
         self.assertIn("updated_at", bm.to_dict())
-        self.assertIn("id", bm.to_dict())   
+        self.assertIn("id", bm.to_dict())
         self.assertIn("name", bm.to_dict())
         self.assertIn("my_number", bm.to_dict())
 

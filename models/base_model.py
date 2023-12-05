@@ -13,6 +13,12 @@ class BaseModel:
     """
 
     def __init__(self, *args, **kwargs):
+        """Initializes a new BaseModel.
+
+        Args:
+            *args (any): Unused.
+            **kwargs (dict): Key/value pairs of attributes.
+        """
         date_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for key, value in kwargs.items():
