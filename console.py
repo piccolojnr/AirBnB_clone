@@ -32,23 +32,21 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, arg):
         """Default behavior for cmd module when input is invalid"""
-        args = {
+        arg_stack = {
             "all": self.do_all,
             "show": self.do_show,
             "count": self.do_count,
             "destroy": self.do_destroy,
             "update": self.do_update,
         }
-        match = re.search(r"\.", arg)
-        if match is not None:
-            arg1 = [arg[: match.span()[0]], arg[match.span()[1] :]]
-            match = re.search(r"\((.*?)\)", arg1[1])
-            if match is not None:
-                command = [arg1[1][: match.span()[0]], match.group()[1:-1]]
-                if command[0] in args:
-                    call = args[command[0]]
-                    call(arg1[0])
-                    return
+        match = extract_method_info(arg)
+
+        if match and len(match) >= 3 and match[1] in arg_stack:
+            call = match[1]
+            del match[1]
+            args = " ".join(match)
+            arg_stack[call](args)
+            return
 
         print("*** Unknown syntax: {}".format(arg))
         return False
@@ -253,6 +251,34 @@ def parse_arg(arg):
     args = [substring.strip('"') for substring in args]
 
     return args
+
+
+def extract_method_info(method_string):
+    """
+    Extracts the class name, method name, and arguments from a method call string.
+
+    Args:
+        method_string (str): The method call string.
+
+    Returns:
+        list: A list containing the class name, method name, and arguments.
+    """
+    # Define a regular expression pattern to match the method call structure
+    pattern = r"^(\w+)\.(\w+)\((.*)\)$"
+
+    # Use re.match to check if the method_string matches the pattern
+    match = re.match(pattern, method_string)
+    if match:
+        result = []
+        result.append(match.groups()[0])
+        result.append(match.groups()[1])
+        result += [
+            i.strip().replace(r"'", "").replace(r'"', "")
+            for i in match.groups()[2].split(",")
+        ]
+        return result
+    else:
+        return None
 
 
 if __name__ == "__main__":
