@@ -82,7 +82,7 @@ class TestUser_instantiation(unittest.TestCase):
         dt_iso = dt.isoformat()
         usr = User(id="345", created_at=dt_iso, updated_at=dt_iso)
         self.assertEqual(usr.id, "345")
-        self.assertEqual(urs.created_at, dt)
+        self.assertEqual(usr.created_at, dt)
         self.assertEqual(usr.updated_at, dt)
 
     def test_instantiation_with_None_kwargs(self):
@@ -150,7 +150,7 @@ class TestUser_to_dict(unittest.TestCase):
     def test_to_dict_contains_correct_keys(self):
         usr = User()
         self.assertIn("id", usr.to_dict())
-        self.assertIn("created_at", usr.t_dict())
+        self.assertIn("created_at", usr.to_dict())
         self.assertIn("updated_at", usr.to_dict())
         self.assertIn("__class__", usr.to_dict())
 

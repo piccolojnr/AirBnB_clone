@@ -179,7 +179,7 @@ class TestCity_to_dict(unittest.TestCase):
             'created_at': dt.isoformat(),
             'updated_at': dt.isoformat(),
         }
-        self.assertDictEqual(cy.to_dict(), tdict)
+        self.assertDictEqual(cty.to_dict(), tdict)
 
     def test_contrast_to_dict_dunder_dict(self):
         cty = City()
