@@ -18,15 +18,15 @@ def parse(arg):
     brackets = re.search(r"\[(.*?)\]", arg)
     if curly_braces is None:
         if brackets is None:
-            return [i.strip(",") for i in split(arg)]
+            return [j.strip(",") for j in split(arg)]
         else:
             lexer = split(arg[:brackets.span()[0]])
-            retl = [i.strip(",") for i in lexer]
+            retl = [j.strip(",") for j in lexer]
             retl.append(brackets.group())
             return retl
     else:
         lexer = split(arg[:curly_braces.span()[0]])
-        retl = [i.strip(",") for i in lexer]
+        retl = [j.strip(",") for j in lexer]
         retl.append(curly_braces.group())
         return retl
 
@@ -49,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
     }
 
     def emptyline(self):
-        """Do nothing upon receiving an empty line."""
+        """Do or return  nothing upon receiving an empty line."""
         pass
 
     def default(self, arg):
@@ -131,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Usage: all or all <class> or <class>.all()
-        Display string representations of all instances of a given class.
+        Display string representation of all instances of a given class.
         If no class is specified, displays all instantiated objects."""
         argl = parse(arg)
         if len(argl) > 0 and argl[0] not in HBNBCommand.__classes:
@@ -195,13 +195,13 @@ class HBNBCommand(cmd.Cmd):
                 obj.__dict__[argl[2]] = argl[3]
         elif type(eval(argl[2])) == dict:
             obj = objdict["{}.{}".format(argl[0], argl[1])]
-            for k, v in eval(argl[2]).items():
-                if (k in obj.__class__.__dict__.keys() and
-                        type(obj.__class__.__dict__[k]) in {str, int, float}):
-                    valtype = type(obj.__class__.__dict__[k])
-                    obj.__dict__[k] = valtype(v)
+            for key, val in eval(argl[2]).items():
+                if (key in obj.__class__.__dict__.keys() and
+                        type(obj.__class__.__dict__[key]) in {str, int, float}):
+                    valtype = type(obj.__class__.__dict__[key])
+                    obj.__dict__[key] = valtype(val)
                 else:
-                    obj.__dict__[k] = v
+                    obj.__dict__[key] = val
         storage.save()
 
 
