@@ -216,22 +216,23 @@ class HBNBCommand(cmd.Cmd):
 
         try:
             obj = objdict[storage_id]
-            attr = args[2]
-            value = args[3]
+            for i in range(3, len(args), 2):
+                attr = args[i - 1]
+                value = args[i]
 
-            # Check if the attribute exists in the object's dictionary
-            if attr in obj.__class__.__dict__.keys():
-                # Get the expected type of the attribute
-                valtype = type(obj.__class__.__dict__[attr])
+                # Check if the attribute exists in the object's dictionary
+                if attr in obj.__class__.__dict__.keys():
+                    # Get the expected type of the attribute
+                    valtype = type(obj.__class__.__dict__[attr])
 
-                try:
-                    # Convert the input value to the expected type
-                    value = valtype(value)
-                except ValueError:
-                    print(f"** invalid value for attribute {attr} **")
-                    return
+                    try:
+                        # Convert the input value to the expected type
+                        value = valtype(value)
+                    except ValueError:
+                        print(f"** invalid value for attribute {attr} **")
+                        return
 
-            obj.__dict__[attr] = value
+                obj.__dict__[attr] = value
             obj.save()
 
         except (AttributeError, KeyError):
@@ -301,10 +302,17 @@ def extract_method_info(method_string):
 
         # Split arguments by commas and clean from leading/trailing spaces
         arguments_list = [
-            arg.strip().replace("'", "").replace('"', "")
+            arg.strip()
+            .replace("'", "")
+            .replace('"', "")
+            .replace("{", "")
+            .replace("}", "")
             for arg in raw_arguments.split(",")
         ]
-
+        # Split each argument using colons
+        arguments_list = [
+            item.strip() for arg in arguments_list for item in arg.split(":")
+        ]
         return [class_name, method_name] + arguments_list
 
     else:

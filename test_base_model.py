@@ -3,13 +3,15 @@ import re
 
 def extract_method_info(method_string):
     """
-    Extracts the class name, method name, and arguments from a method call string.
+    Extracts the class name, method name,
+    and arguments from a method call string.
 
     Args:
         method_string (str): The method call string.
 
     Returns:
-        list: A list containing the class name, method name, and parsed arguments.
+        list: A list containing the class name,
+        method name, and parsed arguments.
     """
     # Define a regular expression pattern to match the method call structure
     pattern = r"^(\w*)?\.(\w+)\((.*)\)$"
@@ -21,10 +23,17 @@ def extract_method_info(method_string):
 
         # Split arguments by commas and clean from leading/trailing spaces
         arguments_list = [
-            arg.strip().replace("'", "").replace('"', "")
+            arg.strip()
+            .replace("'", "")
+            .replace('"', "")
+            .replace("{", "")
+            .replace("}", "")
             for arg in raw_arguments.split(",")
         ]
-
+        # Split each argument using colons
+        arguments_list = [
+            item.strip() for arg in arguments_list for item in arg.split(":")
+        ]
         return [class_name, method_name] + arguments_list
 
     else:
@@ -32,26 +41,7 @@ def extract_method_info(method_string):
 
 
 # Example usage:
-method_string1 = (
-    'User.update("38f22813-2753-4d42-b37c-57a17f1e4f88", "first_name", 42, 3.14)'
-)
+method_string1 = 'User.update("a5d10e79-08c5-4d90-9d19-df5d4d536e53", {"first_name": "John", "age": 89})'
 result1 = extract_method_info(method_string1)
 
-method_string2 = ".destroy()"
-result2 = extract_method_info(method_string2)
-
-if result1:
-    print(f"Class Name: {result1[0]}")
-    print(f"Method Name: {result1[1]}")
-    print(f"Parsed Arguments: {result1[2:]}")
-    print(result1)
-else:
-    print("Invalid method call string.")
-
-if result2:
-    print(f"Class Name: {result2[0]}")
-    print(f"Method Name: {result2[1]}")
-    print(f"Parsed Arguments: {result2[2:]}")
-    print(result2)
-else:
-    print("Invalid method call string.")
+print(result1)
