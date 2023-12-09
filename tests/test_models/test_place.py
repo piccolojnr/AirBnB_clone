@@ -8,12 +8,29 @@ import unittest
 from datetime import datetime
 from time import sleep
 from models.place import Place
+import pep8
 
 
 class test_place_instantiation(unittest.TestCase):
     """
     Unittests for testing instantiation of the Place class.
     """
+
+    def test_pep8_console(self):
+        """Pep8 console.py"""
+        style = pep8.StyleGuide(quiet=False)
+        errors = 0
+        file = ["models/place.py"]
+        errors += style.check_files(file).total_errors
+        self.assertEqual(errors, 0, "Need to fix Pep8")
+
+    def test_pep8_test_console(self):
+        """Pep8 test_console.py"""
+        style = pep8.StyleGuide(quiet=False)
+        errors = 0
+        file = ["tests/test_models/test_place.py"]
+        errors += style.check_files(file).total_errors
+        self.assertEqual(errors, 0, "Need to fix Pep8")
 
     def test_no_args_instantiates(self):
         self.assertEqual(Place, type(Place()))
@@ -46,7 +63,7 @@ class test_place_instantiation(unittest.TestCase):
         pl = Place()
         self.assertIn("user_id", dir(Place()))
         self.assertNotIn("user_id", pl.__dict__)
-        self.assertEqual(str, type(Place.user_id_id))
+        self.assertEqual(str, type(Place.user_id))
 
     def test_descrip_is_public_class_attributes(self):
         pl = Place()

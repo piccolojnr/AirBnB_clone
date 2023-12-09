@@ -18,6 +18,14 @@ class test_file_storage_instantiation(unittest.TestCase):
     testing FileStorage instatntiation
     """
 
+    def test_pep8_test_console(self):
+        """Pep8 test_console.py"""
+        style = pep8.StyleGuide(quiet=False)
+        errors = 0
+        file = ["tests/test_models/test_engine/test_file_storage.py"]
+        errors += style.check_files(file).total_errors
+        self.assertEqual(errors, 0, "Need to fix Pep8")
+
     def test_inst_no_arg(self):
         self.assertEqual(type(FileStorage()), FileStorage)
 

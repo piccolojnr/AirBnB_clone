@@ -7,12 +7,29 @@ import unittest
 from datetime import datetime
 from time import sleep
 from models.user import User
+import pep8
 
 
 class test_user_instantiation(unittest.TestCase):
     """
     Unittests for testing instantiation of the User class.
     """
+
+    def test_pep8_console(self):
+        """Pep8 console.py"""
+        style = pep8.StyleGuide(quiet=False)
+        errors = 0
+        file = ["models/user.py"]
+        errors += style.check_files(file).total_errors
+        self.assertEqual(errors, 0, "Need to fix Pep8")
+
+    def test_pep8_test_console(self):
+        """Pep8 test_console.py"""
+        style = pep8.StyleGuide(quiet=False)
+        errors = 0
+        file = ["tests/test_models/test_user.py"]
+        errors += style.check_files(file).total_errors
+        self.assertEqual(errors, 0, "Need to fix Pep8")
 
     def test_no_args_instantiates(self):
         self.assertEqual(User, type(User()))

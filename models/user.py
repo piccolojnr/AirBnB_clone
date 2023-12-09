@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This file contains the user class   
+This file contains the user class
 """
 from models.base_model import BaseModel
 

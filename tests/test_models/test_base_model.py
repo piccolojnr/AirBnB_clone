@@ -7,12 +7,29 @@ from time import sleep
 from datetime import datetime
 import unittest
 from models.base_model import BaseModel
+import pep8
 
 
 class test_basemodel_instantiation(unittest.TestCase):
     """
     Unittests for testing instantiation of the BaseModel class.
     """
+
+    def test_pep8_console(self):
+        """Pep8 console.py"""
+        style = pep8.StyleGuide(quiet=False)
+        errors = 0
+        file = ["models/base_model.py"]
+        errors += style.check_files(file).total_errors
+        self.assertEqual(errors, 0, "Need to fix Pep8")
+
+    def test_pep8_test_console(self):
+        """Pep8 test_console.py"""
+        style = pep8.StyleGuide(quiet=False)
+        errors = 0
+        file = ["tests/test_models/test_base_model.py"]
+        errors += style.check_files(file).total_errors
+        self.assertEqual(errors, 0, "Need to fix Pep8")
 
     def test_model_no_arg(self):
         self.assertEqual(BaseModel, type(BaseModel()))
@@ -66,7 +83,8 @@ class test_basemodel_instantiation(unittest.TestCase):
     def test_str_representation(self):
         bm = BaseModel()
         self.assertEqual(str, type(str(bm)))
-        self.assertIn("[BaseModel] ({}) {}".format(bm.id, bm.__dict__), str(bm))
+        formated_str = "[BaseModel] ({}) {}".format(bm.id, bm.__dict__)
+        self.assertIn(formated_str, str(bm))
 
 
 class test_basemodel_to_dict_values(unittest.TestCase):

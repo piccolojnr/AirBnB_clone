@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-    This file contains the BaseModel class, which serves as the base class for all models in the project.
+    This file contains the BaseModel class, which serves
+    as the base class for all models in the project.
 """
 from datetime import datetime
 from uuid import uuid4
@@ -44,7 +45,9 @@ class BaseModel:
         """
         Returns a string representation of the object.
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+
+        return "[{}] ({}) {}"\
+            .format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """
