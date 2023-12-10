@@ -1,9 +1,5 @@
 #!/usr/bin/python3
-"""Defines unittests for the models/amenity.py.
-Unittest classes:
-    TestAmenity_instantiation
-    TestAmenity_save
-    TestAmenity_to_dict
+"""Defines unittests for models/amenity.py.
 """
 import os
 import models
@@ -11,10 +7,29 @@ import unittest
 from datetime import datetime
 from time import sleep
 from models.amenity import Amenity
+import pep8
 
 
-class TestAmenity_instantiation(unittest.TestCase):
-    """Unittests for testing the instantiation of the Amenity class."""
+class test_amenity_instantiation(unittest.TestCase):
+    """
+    Unittests for testing instantiation of the Amenity class.
+    """
+
+    def test_pep8_console(self):
+        """Pep8 console.py"""
+        style = pep8.StyleGuide(quiet=False)
+        errors = 0
+        file = ["models/amenity.py"]
+        errors += style.check_files(file).total_errors
+        self.assertEqual(errors, 0, "Need to fix Pep8")
+
+    def test_pep8_test_console(self):
+        """Pep8 test_console.py"""
+        style = pep8.StyleGuide(quiet=False)
+        errors = 0
+        file = ["tests/test_models/test_amenity.py"]
+        errors += style.check_files(file).total_errors
+        self.assertEqual(errors, 0, "Need to fix Pep8")
 
     def test_no_args_instantiates(self):
         self.assertEqual(Amenity, type(Amenity()))
@@ -71,7 +86,7 @@ class TestAmenity_instantiation(unittest.TestCase):
         self.assertNotIn(None, am.__dict__.values())
 
     def test_instantiation_with_kwargs(self):
-        """instantiation with the kwargs test method"""
+        """instantiation with kwargs test method"""
         dt = datetime.today()
         dt_iso = dt.isoformat()
         am = Amenity(id="345", created_at=dt_iso, updated_at=dt_iso)
@@ -84,8 +99,10 @@ class TestAmenity_instantiation(unittest.TestCase):
             Amenity(id=None, created_at=None, updated_at=None)
 
 
-class TestAmenity_save(unittest.TestCase):
-    """Unittests for testing the save method of the Amenity class."""
+class test_amenity_save(unittest.TestCase):
+    """
+    Unittests for testing save method of the Amenity class.
+    """
 
     @classmethod
     def setUp(self):
@@ -122,26 +139,28 @@ class TestAmenity_save(unittest.TestCase):
         am.save()
         self.assertLess(second_updated_at, am.updated_at)
 
-    def test_save_with_arg(self):
+    def test_save_arg(self):
         am = Amenity()
         with self.assertRaises(TypeError):
             am.save(None)
 
-    def test_save_updates_file(self):
+    def test_updates_file(self):
         am = Amenity()
         am.save()
         amid = "Amenity." + am.id
-        with open("file.json", "r") as fp:
-            self.assertIn(amid, fp.read())
+        with open("file.json", "r") as f:
+            self.assertIn(amid, f.read())
 
 
-class TestAmenity_to_dict(unittest.TestCase):
-    """Unittests for testing to_dict method of the Amenity class."""
+class test_amenity_to_dict(unittest.TestCase):
+    """
+    Unittests for testing to_dict method of the Amenity class.
+    """
 
     def test_to_dict_type(self):
         self.assertTrue(dict, type(Amenity().to_dict()))
 
-    def test_to_dict_contains_correct_keys(self):
+    def test_to_dict_contains_keys(self):
         am = Amenity()
         self.assertIn("id", am.to_dict())
         self.assertIn("created_at", am.to_dict())
@@ -168,10 +187,10 @@ class TestAmenity_to_dict(unittest.TestCase):
         am.id = "123456"
         am.created_at = am.updated_at = dt
         tdict = {
-            'id': '123456',
-            '__class__': 'Amenity',
-            'created_at': dt.isoformat(),
-            'updated_at': dt.isoformat(),
+            "id": "123456",
+            "__class__": "Amenity",
+            "created_at": dt.isoformat(),
+            "updated_at": dt.isoformat(),
         }
         self.assertDictEqual(am.to_dict(), tdict)
 
