@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-this file contains the City class
+This file contains the City class
 """
 from models.base_model import BaseModel
 
