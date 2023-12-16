@@ -3,6 +3,8 @@
     width: 100%;
     background-color: white;
     border-bottom: solid 1px #CCCCCC;
+    box-sizing: border-box;
+    position: relative;
 }
 
 #header-logo {
